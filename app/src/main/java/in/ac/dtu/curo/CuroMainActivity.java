@@ -9,6 +9,7 @@ import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -26,6 +27,7 @@ import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.broadcom.app.ledevicepicker.DevicePicker;
 import com.broadcom.app.ledevicepicker.DevicePickerActivity;
@@ -34,6 +36,7 @@ import com.broadcom.app.wicedsense.AnimationManager;
 import com.broadcom.app.wicedsense.SenseManager;
 import com.broadcom.app.wicedsense.Settings;
 import com.broadcom.app.wicedsmart.ota.ui.OtaUiHelper;
+import com.broadcom.ui.BluetoothEnabler;
 import com.broadcom.ui.ExitConfirmUtils;
 
 import in.ac.dtu.curo.R;
@@ -41,6 +44,15 @@ import in.ac.dtu.curo.fragments.CustomerFragment;
 
 public class CuroMainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, DevicePicker.Callback {
+
+    private static final int COMPLETE_INIT = 800;
+    private static final int PROCESS_SENSOR_DATA_ON_UI = 801;
+    private static final int PROCESS_BATTERY_STATUS_UI = 802;
+    private static final int PROCESS_EVENT_DEVICE_UNSUPPORTED = 803;
+    private static final int PROCESS_CONNECTION_STATE_CHANGE_UI = 804;
+    private static final String FRAGMENT_TEMP = "fragment_temp";
+
+
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -88,6 +100,8 @@ public class CuroMainActivity extends ActionBarActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+        mUiHandler = new Handler(new UiHandlerCallback());
+
         initDevicePicker();
         registerReceiver(mBtStateReceiver, new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED));
 
@@ -110,8 +124,9 @@ public class CuroMainActivity extends ActionBarActivity
     }
 
     private void initDevicePicker() {
+        Log.d("CURO", "initDevicePicker");
         mDevicePickerTitle = getString(R.string.title_devicepicker);
-        mDevicePicker = new DevicePicker(this, Settings.PACKAGE_NAME,
+        mDevicePicker = new DevicePicker(this, getPackageName(),
                 DevicePickerActivity.class.getName(), this,
                 Uri.parse("content://com.brodcom.app.wicedsense/device/pick"));
         mDevicePicker.init();
@@ -181,6 +196,109 @@ public class CuroMainActivity extends ActionBarActivity
     @Override
     public void onDevicePickCancelled() {
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initResourcesAndResume();
+    }
+
+    /**
+     * Initialize async resources in series
+     *
+     * @return
+     */
+    private boolean initResourcesAndResume() {
+        switch (mInitState) {
+            case 0:
+                mInitState++;
+            case 1:
+                // Check if BT is on, If not, prompt user
+                if (!BluetoothEnabler.checkBluetoothOn(this)) {
+                    return false;
+                }
+                mInitState++;
+                SenseManager.init(this);
+            case 2:
+                // Check if sense manager initialized. If not, keep waiting
+                if (waitForSenseManager()) {
+                    return false;
+                }
+                mInitState = -1;
+                checkDevicePicked();
+        }
+        mSenseManager.registerEventCallbackHandler(mSensorDataEventHandler);
+
+        if (mSenseManager.isConnectedAndAvailable()) {
+            mSenseManager.enableNotifications(true);
+        }
+        //Settings.addChangeListener(this);
+        return true;
+    }
+
+    private class UiHandlerCallback implements Handler.Callback {
+
+        @Override
+        public boolean handleMessage(Message msg) {
+            switch (msg.what) {
+
+                // These events run on the mUiHandler on the UI Main Thread
+                case COMPLETE_INIT:
+                    initResourcesAndResume();
+                    break;
+                case PROCESS_EVENT_DEVICE_UNSUPPORTED:
+                    Toast.makeText(getApplicationContext(), R.string.error_unsupported_device,
+                            Toast.LENGTH_SHORT).show();
+                    break;
+                case PROCESS_CONNECTION_STATE_CHANGE_UI:
+                    //updateConnectionStateWidgets();
+                    break;
+                case PROCESS_BATTERY_STATUS_UI:
+                    //updateBatteryLevelWidget(msg.arg1);
+                    break;
+                case PROCESS_SENSOR_DATA_ON_UI:
+                    //processSensorData((byte[]) msg.obj);
+                    break;
+            }
+            return true;
+        }
+    }
+
+    /**
+     * Acquire reference to the SenseManager serivce....This is asynchronous
+     *
+     * @return
+     */
+    private boolean waitForSenseManager() {
+        // Check if the SenseManager is available. If not, keep retrying
+        mSenseManager = SenseManager.getInstance();
+        if (mSenseManager == null) {
+            mUiHandler.sendEmptyMessageDelayed(COMPLETE_INIT, Settings.SERVICE_INIT_TIMEOUT_MS);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Check if a device has been picked, and launch the device picker if not...
+     *
+     * @return
+     */
+    private boolean checkDevicePicked() {
+        if (mSenseManager != null && mSenseManager.getDevice() != null) {
+            return true;
+        }
+        // Launch device picker
+        launchDevicePicker();
+        return false;
+    }
+
+    /**
+     * Launch the device picker
+     */
+    private void launchDevicePicker() {
+        mDevicePicker.launch(mDevicePickerTitle, null, null);
     }
 
 

@@ -95,7 +95,7 @@ public class Settings {
 
     private static final String TAG = TAG_PREFIX + "Settings";
 
-    public static final String PACKAGE_NAME = "com.broadcom.app.wicedsense";
+    public static final String PACKAGE_NAME = "in.ac.dtu.curo";
 
     private static final String SETTINGS_PREF_NAME = "com.broadcom.app.wicedsense_preferences";
     static final String SETTINGS_KEY_PREFIX = "settings_";
