@@ -2,7 +2,7 @@
 <resources>
 
     <!-- Main -->
-    <string name="app_name">WICED Sense</string>
+    <string name="app_name">Curo</string>
     <string name="title_devicepicker">Select the WICED Sense Kit</string>
     <string name="title_activity_compass">WICED Sense</string>
     <string name="temperature_label">TEMP</string>
@@ -64,4 +64,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_example">Example action</string>
+    <string name="title_activity_customer">CustomerActivity</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>
