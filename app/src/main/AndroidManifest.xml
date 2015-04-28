@@ -21,10 +21,10 @@
     <application
         android:allowBackup="false"
         android:hardwareAccelerated="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
-        android:logo="@drawable/ic_launcher"
+        android:logo="@mipmap/ic_launcher"
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.broadcom.app.wicedsense.MainActivity"
@@ -53,7 +53,7 @@
 
         <activity
             android:name=".CuroMainActivity"
-            android:label="@string/title_activity_curo_main"
+            android:label="CURO"
             android:theme="@style/Theme.AppCompat.Light" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
