@@ -62,14 +62,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".customer.CustomerActivity"
-            android:label="@string/title_activity_customer"
-            android:parentActivityName=".CuroMainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="in.ac.dtu.curo.CuroMainActivity" />
-        </activity>
     </application>
 
 </manifest>
