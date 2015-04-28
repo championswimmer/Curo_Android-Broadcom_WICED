@@ -175,12 +175,28 @@ public class CuroMainActivity extends ActionBarActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+        if (id == R.id.action_connect) {
+            doConnectDisconnetBakchodi();
+        }
+
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void doConnectDisconnetBakchodi() {
+        if (!mSenseManager.isConnectedAndAvailable()) {
+            if (!mSenseManager.connect()) {
+                //updateConnectionStateWidgets();
+            }
+        } else {
+            if (!mSenseManager.disconnect()) {
+                //updateConnectionStateWidgets();
+            }
+        }
     }
 
     @Override

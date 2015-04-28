@@ -247,8 +247,8 @@ public class NavigationDrawerFragment extends Fragment {
             return true;
         }
 
-        if (item.getItemId() == R.id.action_example) {
-            Toast.makeText(getActivity(), "Example action.", Toast.LENGTH_SHORT).show();
+        if (item.getItemId() == R.id.action_connect) {
+            ((CuroMainActivity) getActivity()).doConnectDisconnetBakchodi();
             return true;
         }
 
