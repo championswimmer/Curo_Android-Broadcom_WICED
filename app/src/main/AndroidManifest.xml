@@ -62,6 +62,22 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".customer.FindProductActivity"
+            android:label="@string/title_activity_find_product"
+            android:parentActivityName=".CuroMainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="in.ac.dtu.curo.CuroMainActivity" />
+        </activity>
+        <activity
+            android:name=".customer.BillingActivity"
+            android:label="@string/title_activity_billing"
+            android:parentActivityName=".CuroMainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="in.ac.dtu.curo.CuroMainActivity" />
+        </activity>
     </application>
 
 </manifest>

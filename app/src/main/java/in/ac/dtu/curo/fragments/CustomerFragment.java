@@ -1,24 +1,28 @@
 package in.ac.dtu.curo.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import java.util.Arrays;
 
 import in.ac.dtu.curo.CuroMainActivity;
 import in.ac.dtu.curo.R;
+import in.ac.dtu.curo.customer.BillingActivity;
+import in.ac.dtu.curo.customer.FindProductActivity;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link CustomerFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CustomerFragment extends Fragment {
+public class CustomerFragment extends Fragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -85,8 +89,26 @@ public class CustomerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_for_ustomer, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_for_ustomer, container, false);
+
+        ((Button) rootView.findViewById(R.id.btn_billing)).setOnClickListener(this);
+        ((Button) rootView.findViewById(R.id.btn_find_product)).setOnClickListener(this);
+
+        return rootView;
     }
 
 
+    @Override
+    public void onClick(View view) {
+        if (view.getId() == R.id.btn_billing) {
+            Intent i = new Intent(getActivity(), BillingActivity.class);
+            startActivity(i);
+        }
+
+        if (view.getId() == R.id.btn_find_product) {
+            Intent i = new Intent(getActivity(), FindProductActivity.class);
+            startActivity(i);
+
+        }
+    }
 }
