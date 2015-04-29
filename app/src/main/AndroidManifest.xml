@@ -78,6 +78,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="in.ac.dtu.curo.CuroMainActivity" />
         </activity>
+        <activity
+            android:name=".staff.ShelfStatusActivity"
+            android:label="@string/title_activity_shelf_status"
+            android:parentActivityName=".CuroMainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="in.ac.dtu.curo.CuroMainActivity" />
+        </activity>
     </application>
 
 </manifest>

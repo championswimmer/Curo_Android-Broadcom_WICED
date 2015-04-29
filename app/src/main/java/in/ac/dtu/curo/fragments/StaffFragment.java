@@ -4,26 +4,23 @@ package in.ac.dtu.curo.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import java.util.Arrays;
-
-import in.ac.dtu.curo.CuroMainActivity;
 import in.ac.dtu.curo.R;
 import in.ac.dtu.curo.customer.BillingActivity;
 import in.ac.dtu.curo.customer.FindProductActivity;
+import in.ac.dtu.curo.staff.ShelfStatusActivity;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link CustomerFragment#newInstance} factory method to
+ * Use the {@link StaffFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CustomerFragment extends Fragment implements View.OnClickListener {
+public class StaffFragment extends Fragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -40,11 +37,11 @@ public class CustomerFragment extends Fragment implements View.OnClickListener {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment CustomerFragment.
+     * @return A new instance of fragment StaffFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static CustomerFragment newInstance(String param1, String param2) {
-        CustomerFragment fragment = new CustomerFragment();
+    public static StaffFragment newInstance(String param1, String param2) {
+        StaffFragment fragment = new StaffFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -52,29 +49,8 @@ public class CustomerFragment extends Fragment implements View.OnClickListener {
         return fragment;
     }
 
-    public CustomerFragment() {
+    public StaffFragment() {
         // Required empty public constructor
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        byte[] gyroData = new byte[19];
-        ((CuroMainActivity) getActivity()).processSensorData(gyroData, new CuroMainActivity.OnValueReturned() {
-            @Override
-            public void returnValue(String instrument, int[] values) {
-                if (instrument.equals("ACCEL")) {
-                    Log.d("CURO", "ACCEL" + Arrays.toString(values));
-                }
-                if (instrument.equals("GYRO")) {
-                    Log.d("CURO", "GYRO" + Arrays.toString(values));
-                }
-                if (instrument.equals("MAGNET")) {
-                    Log.d("CURO", "MAGNET" + Arrays.toString(values));
-                }
-            }
-        });
-        Log.d("CURO", Arrays.toString(gyroData));
     }
 
     @Override
@@ -90,10 +66,10 @@ public class CustomerFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_for_ustomer, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_staff, container, false);
 
-        ((Button) rootView.findViewById(R.id.btn_billing)).setOnClickListener(this);
-        ((Button) rootView.findViewById(R.id.btn_find_product)).setOnClickListener(this);
+        ((Button) rootView.findViewById(R.id.btn_shelf_status)).setOnClickListener(this);
+        ((Button) rootView.findViewById(R.id.btn_customer_stats)).setOnClickListener(this);
 
         return rootView;
     }
@@ -101,15 +77,14 @@ public class CustomerFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.btn_billing) {
+        if (view.getId() == R.id.btn_customer_stats) {
             //Intent i = new Intent(getActivity(), BillingActivity.class);
             //startActivity(i);
-            Toast.makeText(getActivity(), "Your trolley needs to be near billing counter to start billing", Toast.LENGTH_SHORT).show();
-
+            Toast.makeText(getActivity(), "No customers in the shop right now", Toast.LENGTH_SHORT).show();
         }
 
-        if (view.getId() == R.id.btn_find_product) {
-            Intent i = new Intent(getActivity(), FindProductActivity.class);
+        if (view.getId() == R.id.btn_shelf_status) {
+            Intent i = new Intent(getActivity(), ShelfStatusActivity.class);
             startActivity(i);
 
         }

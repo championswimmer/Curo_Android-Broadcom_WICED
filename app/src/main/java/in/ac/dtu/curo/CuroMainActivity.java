@@ -42,6 +42,7 @@ import com.broadcom.ui.ExitConfirmUtils;
 
 import in.ac.dtu.curo.R;
 import in.ac.dtu.curo.fragments.CustomerFragment;
+import in.ac.dtu.curo.fragments.StaffFragment;
 
 public class CuroMainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, DevicePicker.Callback {
@@ -115,11 +116,14 @@ public class CuroMainActivity extends ActionBarActivity
         switch (position) {
             case 0:
             default:
-                fm.beginTransaction().add(R.id.container, CustomerFragment.newInstance("A", "a")).commit();
+                fm.beginTransaction().replace(R.id.container, CustomerFragment.newInstance("A", "a")).commit();
                 break;
             case 1:
+                Toast.makeText(getBaseContext(), "There are no customers or staff members to manage now", Toast.LENGTH_SHORT).show();
+
                 break;
             case 2:
+                fm.beginTransaction().replace(R.id.container, StaffFragment.newInstance("A", "a")).commit();
                 break;
         }
     }

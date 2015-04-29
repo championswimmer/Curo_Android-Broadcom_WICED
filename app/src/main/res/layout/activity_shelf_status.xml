@@ -1,0 +1,233 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="in.ac.dtu.curo.staff.ShelfStatusActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_weight="1"
+                android:text="Shelf 1 (Grocery)"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.DialogWindowTitle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="Pressure\n  78tor"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text="Humidity\n  57%"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text="Temp.\n  32C"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <TextView
+                android:text="Items:\n Brinjals, Tomato, Potato, Onion"
+                android:textColor="@android:color/darker_gray"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="3dp"
+                android:background="@android:color/holo_blue_dark"/>
+        </LinearLayout>
+        <!-- ###############################################################################  -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_weight="1"
+                android:text="Shelf 11 (Frozen Foods)"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.DialogWindowTitle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="Pressure\n  75tor"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text="Humidity\n  12%"
+                    android:textColor="@android:color/holo_green_dark"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text="Temp.\n  14C"
+                    android:textColor="@android:color/holo_orange_dark"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <TextView
+                android:text="Items:\n Kebabs, Nuggets, Potate Wedges, Tikkis"
+                android:textColor="@android:color/darker_gray"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="3dp"
+                android:background="@android:color/holo_blue_dark"/>
+        </LinearLayout>
+        <!-- ###############################################################################  -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_weight="1"
+                android:text="Shelf 6 (Electronics)"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.DialogWindowTitle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="Pressure\n  78tor"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text="Humidity\n  77%"
+                    android:textColor="@android:color/holo_red_dark"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text="Temp.\n  36C"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <TextView
+                android:text="Items:\n MP3Players, Mobiles"
+                android:textColor="@android:color/darker_gray"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="3dp"
+                android:background="@android:color/holo_blue_dark"/>
+        </LinearLayout>
+        <!-- ###############################################################################  -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_weight="1"
+                android:text="Shelf 8 (Fashion)"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.DialogWindowTitle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="Pressure\n  77tor"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text="Humidity\n  67%"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text="Temp.\n  30C"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <TextView
+                android:text="Items:\n Jeans, Shirts, TShirts"
+                android:textColor="@android:color/darker_gray"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="3dp"
+                android:background="@android:color/holo_blue_dark"/>
+        </LinearLayout>
+        <!-- ###############################################################################  -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_weight="1"
+                android:text="Shelf 21 (Cosmetics)"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.DialogWindowTitle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="Pressure\n  78tor"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text="Humidity\n  57%"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text="Temp.\n  18C"
+                    android:textColor="@android:color/holo_green_dark"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <TextView
+                android:text="Items:\n Shampoo, Lotions, Creams"
+                android:textColor="@android:color/darker_gray"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="3dp"
+                android:background="@android:color/holo_blue_dark"/>
+        </LinearLayout>
+        <!-- ###############################################################################  -->
+
+
+    </LinearLayout>
+
+
+</ScrollView>
