@@ -3,10 +3,14 @@ package in.ac.dtu.curo.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.Arrays;
+
+import in.ac.dtu.curo.CuroMainActivity;
 import in.ac.dtu.curo.R;
 
 /**
@@ -45,6 +49,27 @@ public class CustomerFragment extends Fragment {
 
     public CustomerFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        byte[] gyroData = new byte[19];
+        ((CuroMainActivity) getActivity()).processSensorData(gyroData, new CuroMainActivity.OnValueReturned() {
+            @Override
+            public void returnValue(String instrument, int[] values) {
+                if (instrument.equals("ACCEL")) {
+                    Log.d("CURO", "ACCEL" + Arrays.toString(values));
+                }
+                if (instrument.equals("GYRO")) {
+                    Log.d("CURO", "GYRO" + Arrays.toString(values));
+                }
+                if (instrument.equals("MAGNET")) {
+                    Log.d("CURO", "MAGNET" + Arrays.toString(values));
+                }
+            }
+        });
+        Log.d("CURO", Arrays.toString(gyroData));
     }
 
     @Override

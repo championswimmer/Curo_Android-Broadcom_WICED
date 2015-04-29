@@ -17,6 +17,7 @@
 package com.broadcom.app.wicedsense;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import com.broadcom.app.ledevicepicker.DevicePicker;
 import com.broadcom.app.ledevicepicker.DevicePickerActivity;
@@ -725,6 +726,8 @@ public class MainActivity extends Activity implements OnLicenseAcceptListener,
             offset = 1;
             if (SensorDataParser.accelerometerHasChanged(maskField)) {
                 if (Settings.accelerometerEnabled() && mAccelerometerFrag.isVisible()) {
+                    Log.d("CURO", Arrays.toString(sensorData));
+                    Log.d("CURO", Arrays.toString(values));
                     SensorDataParser.getAccelorometerData(sensorData, offset, values);
                     mAccelerometerFrag.setValue(mAnimation, values[0], values[1], values[2]);
                     updateView = true;

@@ -34,6 +34,7 @@ import com.broadcom.app.ledevicepicker.DevicePickerActivity;
 import com.broadcom.app.license.LicenseUtils;
 import com.broadcom.app.wicedsense.AnimationManager;
 import com.broadcom.app.wicedsense.SenseManager;
+import com.broadcom.app.wicedsense.SensorDataParser;
 import com.broadcom.app.wicedsense.Settings;
 import com.broadcom.app.wicedsmart.ota.ui.OtaUiHelper;
 import com.broadcom.ui.BluetoothEnabler;
@@ -352,6 +353,118 @@ public class CuroMainActivity extends ActionBarActivity
 
         SenseManager.destroy();
         finish();
+    }
+
+    private long mLastRefreshTimeMs;
+    private long mLastRefreshSlowerTimeMs;
+
+    public interface OnValueReturned {
+        void returnValue(String instrument, int[] values);
+    }
+
+
+    /**
+     * Parses the sensor data bytes and updates the corresponding sensor(s) UI
+     * component
+     *
+     * @param sensorData
+     */
+    public void processSensorData(byte[] sensorData, OnValueReturned ovr) {
+        if (mAnimation != null && mAnimation.useAnimation()) {
+            mAnimation.init();
+        }
+
+        if (mAnimationSlower != null && mAnimationSlower.useAnimation()) {
+            mAnimationSlower.init();
+        }
+
+        int maskField = sensorData[0];
+        int offset = 0;
+        int[] values = new int[3];
+        boolean updateView = false;
+        long currentTimeMs = System.currentTimeMillis();
+        switch (sensorData.length) {
+            case 19:
+                Log.d("CURO", "processSensorData 19");
+                if (currentTimeMs - mLastRefreshTimeMs < Settings.REFRESH_INTERVAL_MS) {
+                    return;
+                } else {
+                    mLastRefreshTimeMs = currentTimeMs;
+                }
+
+                // packet type specifying accelerometer, gyro, magno
+                offset = 1;
+                if (true) {
+                    SensorDataParser.getAccelorometerData(sensorData, offset, values);
+                    ovr.returnValue("ACCEL", new int[]{values[0], values[1], values[2]});
+                    //mAccelerometerFrag.setValue(mAnimation, values[0], values[1], values[2]);
+                    updateView = true;
+                    offset += SensorDataParser.SENSOR_ACCEL_DATA_SIZE;
+                }
+
+                if (true) {
+                    SensorDataParser.getGyroData(sensorData, offset, values);
+                    ovr.returnValue("GYRO", new int[]{values[0], values[1], values[2]});
+                    //mGyroFrag.setValue(mAnimation, values[0], values[1], values[2]);
+                    updateView = true;
+                    offset += SensorDataParser.SENSOR_GYRO_DATA_SIZE;
+                }
+
+                if (true) {
+                    SensorDataParser.getMagnometerData(sensorData, offset, values);
+                    ovr.returnValue("MAGNET", new int[]{values[0], values[1], values[2]});
+                    float angle = SensorDataParser.getCompassAngleDegrees(values);
+                    //mCompassFrag.setValue(mAnimation, angle, values[0], values[1], values[2]);
+                    updateView = true;
+                    offset += SensorDataParser.SENSOR_MAGNO_DATA_SIZE;
+                }
+
+                if (updateView && mAnimation != null) {
+                    mAnimation.animate();
+                }
+                break;
+            case 7:
+                Log.d("CURO", "processSensorData 7");
+
+                if (currentTimeMs - mLastRefreshSlowerTimeMs < Settings.REFRESH_INTERVAL_SLOWER_MS) {
+                    return;
+                } else {
+                    mLastRefreshSlowerTimeMs = currentTimeMs;
+                }
+
+                // packet type specifying temp, humid, press
+                offset = 1;
+                float value = 0;
+                if (SensorDataParser.humidityHasChanged(maskField)) {
+                    value = SensorDataParser.getHumidityPercent(sensorData, offset);
+                    offset += SensorDataParser.SENSOR_HUMD_DATA_SIZE;
+                    //mHumidityFrag.setValue(mAnimationSlower, value);
+                    updateView = true;
+                }
+                if (SensorDataParser.pressureHasChanged(maskField)) {
+                    value = SensorDataParser.getPressureMBar(sensorData, offset);
+                    offset += SensorDataParser.SENSOR_PRES_DATA_SIZE;
+                    //mPressureFrag.setValue(mAnimationSlower, value);
+                    updateView = true;
+                }
+
+                if (SensorDataParser.temperatureHasChanged(maskField)) {
+                    if (mIsTempScaleF) {
+                        value = SensorDataParser.getTemperatureF(sensorData, offset);
+                    } else {
+                        value = SensorDataParser.getTemperatureC(sensorData, offset);
+                    }
+                    offset += SensorDataParser.SENSOR_TEMP_DATA_SIZE;
+                    //mTemperatureFrag.setValue(mAnimationSlower, value);
+                    updateView = true;
+                }
+                if (updateView && mAnimationSlower != null) {
+                    mAnimationSlower.animate();
+                }
+                break;
+        }
+
+        // If animation is enabled, call animate...
     }
 
 }
